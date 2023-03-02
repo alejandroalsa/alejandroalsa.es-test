@@ -89,6 +89,60 @@ Como ya he dicho antes el nombre no tiene porque ser el mismo, al mismo tiempo q
 
 ## Configuration del FireWall
 
+### Configurar políticas de UFW predeterminadas
+
+Para ver el estado de ufw, introduzca el siguiente comando:
+
+```bash
+sudo ufw status
+```
+
+Tendra que recibir una salida como esta:
+
+
+```bash
+Status: inactive
+```
+
+La política de firewall predeterminada funciona muy bien tanto para los servidores como para el escritorio. Siempre es una buena política cerrar todos los puertos en el servidor y abrir solo los puertos requeridos uno por uno. Bloqueemos todas las conexiones entrantes y solo permitamos conexiones salientes:
+
+```bash
+sudo ufw default allow outgoing
+```
+```bash
+sudo ufw default deny incoming
+```
+
+### Abrir conexiones SSH TCP puerto 22
+
+El siguiente paso lógico es permitir los puertos SSH entrantes. Podemos abrir fácilmente el puerto 22 de SSH TCP usando UFW de la siguiente manera:
+
+```bash
+sudo ufw allow ssh
+```
+
+### Activar el cortafuegos
+
+Ahora tenemos la configuración básica habilitada. En otras palabras, el cortafuegos eliminará todo el tráfico entrante, excepto el puerto 22 ssh TCP:
+
+```bash
+sudo ufw enable
+```
+
+Recuerde, una vez que UFW está habilitado, también se ejecuta en los reinicios del sistema. Podemos verificar eso fácilmente de la siguiente manera usando el comando systemctl:
+
+```bash
+sudo systemctl status ufw.service
+```
+
+Si necesita detener el firewall y deshabilitarlo al iniciar el sistema:
+
+```bash
+sudo ufw disable
+```
+
+### Abrir conexiones/puertos entrantes específicos
+
 ## Configuración del Cliente VPN de WireGuar
 
 El procedimiento para instalar y configurar un cliente VPN es el mismo que para configurar el servidor. 
